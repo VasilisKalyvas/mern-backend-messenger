@@ -26,9 +26,8 @@ const server = app.listen(PORT, console.log(`Server is running on PORT ${PORT}`)
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://mern-backend-messenger.herokuapp.com/",
-    methods: ["GET", "POST"],
-    credentials: true
+    origin: "http://localhost:3000",
+    // credentials: true,
   },
 });
 
