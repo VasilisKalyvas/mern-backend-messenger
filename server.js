@@ -23,13 +23,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000
 const server = app.listen(PORT, console.log(`Server is running on PORT ${PORT}`));
 
-const io = require("socket.io")(server, {
-  pingTimeout: 60000,
-  cors: {
-    origin: "https://mern-app-messenger.herokuapp.com/",
-    // credentials: true,
-  },
-});
+const io = require('socket.io')(server, {cors: {origin: "*"}});
 
 io.on("connection", (socket) => {
     console.log("Connected to socket.io");
