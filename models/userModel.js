@@ -17,6 +17,10 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    status: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestaps: true }
 );

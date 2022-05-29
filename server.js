@@ -6,7 +6,6 @@ const userRoutes = require('./routes/userRoutes');
 const chatRoutes = require('./routes/chatRoutes');
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
-
 dotenv.config();
 connectDB();
 const app = express();
@@ -60,5 +59,9 @@ io.on("connection", (socket) => {
     socket.off("setup", () => {
       console.log("USER DISCONNECTED");
       socket.leave(userData._id);
+    });
+
+    socket.on('disconnect', () => {
+      console.log("USER DISCONNECTED");
     });
   });
