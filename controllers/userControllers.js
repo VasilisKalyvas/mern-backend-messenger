@@ -61,7 +61,7 @@ const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-  
+ const statusUpdate = await User.findOneAndUpdate(email, {status: true});
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
@@ -78,4 +78,25 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { allUsers, registerUser, authUser };
+const logout = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  const statusUpdate = await User.findOneAndUpdate(email, {status: false});
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      pic: user.pic,
+      token: generateToken(user._id),
+      status:  user.status,
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid Email or Password");
+  }
+});
+
+
+module.exports = { allUsers, registerUser, authUser, logout };
